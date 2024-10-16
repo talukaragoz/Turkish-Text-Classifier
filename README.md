@@ -1,14 +1,13 @@
 # Turkish Text Classification Project
 
-This project implements a Turkish text classification system using both a Long Short-Term Memory (LSTM) neural network and a Large Language Model (LLM) approach. It provides a FastAPI web service for classifying Turkish text into various domains.
+This project implements a Turkish text classification system using both a Long Short-Term Memory (LSTM) neural network and a Large Language Model (LLM) approach. It provides an interactive command-line interface for classifying Turkish text into various domains.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.10+
-- Docker and Docker Compose (optional, for containerized deployment)
-- Ollama (for LLM-based classification)
+- Docker
+- Ollama with the `llama3` model installed locally
 
 ### Installation
 
@@ -18,42 +17,51 @@ This project implements a Turkish text classification system using both a Long S
    cd turkish-text-classification
    ```
 
-2. Install the required Python packages:
-   ```
-   pip install -r requirements.txt
-   ```
-
-3. Ensure you have the `llama3` model downloaded locally for Ollama. Even when running in Docker, the model should be stored on your local machine:
+2. Ensure you have the `llama3` model downloaded locally for Ollama:
    ```
    ollama pull llama3
    ```
 
 ## Running the Application
 
-### Local Development
+### Docker Deployment (Recommended)
 
-1. Start the FastAPI server:
+1. Build the Docker image:
    ```
-   uvicorn app:app --reload
-   ```
-
-2. The API will be available at `http://localhost:8000`.
-
-### Docker Deployment
-
-1. Build and start the Docker containers:
-   ```
-   docker-compose up --build
+   docker build -t interactive-text-classifier .
    ```
 
-2. The API will be available at `http://localhost:8000`.
+2. Run the Docker container:
+   ```
+   docker run -it -v ~/.ollama/models:/root/.ollama/models:ro interactive-text-classifier
+   ```
 
-## API Endpoints
+   This command mounts your local Ollama models directory to the container, allowing it to use your locally installed `llama3` model.
 
-- `/classify_llm`: Classify text using the LLM approach
-- `/classify_lstm`: Classify text using the LSTM model
-- `/classify_both`: Classify text using both LLM and LSTM approaches
-- `/batch_classify_lstm`: Batch classify multiple texts using the LSTM model
+3. The interactive classifier will start, prompting you to enter text for classification.
+
+### Local Development (Alternative)
+
+If you prefer to run the application without Docker:
+
+1. Install the required Python packages:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. Run the interactive classifier:
+   ```
+   python interactive_classify.py
+   ```
+
+## Using the Interactive Classifier
+
+Once the application is running, you can:
+
+1. Enter Turkish text when prompted.
+2. The system will classify the text using both the LSTM and LLM models.
+3. Results from both models will be displayed.
+4. Type 'quit' to exit the application.
 
 ## Models
 
@@ -92,13 +100,35 @@ The script will:
 - Evaluate the model on a test set
 - Save the trained model and associated metadata
 
+## Additional Deployment Option: FastAPI Service
+
+For those who need a web service instead of an interactive command-line interface, this project also includes a FastAPI-based deployment option.
+
+### Running with Docker Compose
+
+1. Ensure you have Docker and Docker Compose installed.
+2. Run the following command in the project directory:
+   ```
+   docker-compose up --build
+   ```
+3. The API will be available at `http://localhost:8000`.
+
+### API Endpoints
+
+- `/classify_llm`: Classify text using the LLM approach
+- `/classify_lstm`: Classify text using the LSTM model
+- `/classify_both`: Classify text using both LLM and LSTM approaches
+- `/batch_classify_lstm`: Batch classify multiple texts using the LSTM model
+
 ## Project Structure
 
-- `app.py`: FastAPI application and API endpoints
+- `interactive_classify.py`: Main script for interactive classification
+- `app.py`: FastAPI application and API endpoints (for web service option)
 - `model.py`: LSTM model architecture
 - `model_query.py`: LSTM model inference
 - `llm_query.py`: LLM-based classification
 - `training.py`: LSTM model training script
 - `utils.py`: Utility functions for data processing and model helpers
 - `requirements.txt`: Python dependencies
-- `Dockerfile` and `docker-compose.yml`: Docker configuration files
+- `Dockerfile`: Docker configuration file
+- `docker-compose.yml`: Docker Compose configuration (for web service option)
