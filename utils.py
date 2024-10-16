@@ -1,17 +1,12 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
 from collections import Counter
 import torch
 from torch.utils.data import Dataset, DataLoader
 import os
 import json
 
-import torch
-from torch.utils.data import Dataset, DataLoader
-import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from gensim.models import Word2Vec
 from tqdm import tqdm

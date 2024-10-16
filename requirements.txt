@@ -1,0 +1,11 @@
+uvicorn==0.32.0
+fastapi==0.115.2
+langchain-ollama==0.2.0
+langchain-core==0.3.10
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+torch==2.4.0
+gensim==4.3.3
+tqdm==4.66.5
+vngrs-nlp==0.2.3

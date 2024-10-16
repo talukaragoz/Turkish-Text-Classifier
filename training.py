@@ -117,7 +117,7 @@ if __name__ == "__main__":
     
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss()
-    device = torch.device('mps' if torch.mps.is_available() else 'cpu') # Choose your desired version
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # Choose your desired version
     
     print(f"Training on: {device}")
     

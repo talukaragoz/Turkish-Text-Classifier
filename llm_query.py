@@ -1,12 +1,16 @@
+import os
 from langchain_ollama import ChatOllama
 from langchain_core.messages import AIMessage
 
+ollama_host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+
 llm = ChatOllama(
     model="llama3",
-    temperature=0
+    temperature=0,
+    base_url=ollama_host
 )
 
-def test_llm(text, label):
+def test_llm(text):
     messages = [
         (
             "system",
@@ -61,4 +65,4 @@ def test_llm(text, label):
             text),
     ]
     out = llm.invoke(messages).content
-    return out, label in out
+    return out
