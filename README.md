@@ -14,7 +14,7 @@ This project implements a Turkish text classification system using both a Long S
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/turkish-text-classification.git
+   git clone https://github.com/talukaragoz/turkish-text-classification.git
    cd turkish-text-classification
    ```
 
